@@ -1,0 +1,12 @@
+.table th {
+  text-align: left;
+}
+
+.table td {
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+.table :is(th, td) {
+  padding-block: 0.5rem;
+}
