@@ -25,4 +25,8 @@ export default defineConfig({
     }),
     react(),
   ],
+  server: {
+    port: 3102,
+    host: true,
+  },
 });
