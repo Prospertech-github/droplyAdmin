@@ -83,7 +83,9 @@ export default function TopPlatform() {
   return (
     <Card>
       <header className="md:flex md:space-y-0 space-y-4">
-        <h6 className="flex-1 text-slate-900 dark:text-white capitalize">Order platforms</h6>
+        <h6 className="flex-1 text-base 2xl:text-xl text-slate-900 dark:text-white capitalize">
+          Order platforms
+        </h6>
         <div className="flex-none">
           <Listbox value={merPer} onChange={setMerPer}>
             <div className="relative">
@@ -92,7 +94,11 @@ export default function TopPlatform() {
               </Listbox.Button>
               <Listbox.Options className="z-10 w-[140px] absolute right-0 mt-1 max-h-60 overflow-auto rounded-md  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {Object.entries(merMap).map(([key, value]) => (
-                  <Listbox.Option key={key} value={key} className="p-2 cursor-pointer">
+                  <Listbox.Option
+                    key={key}
+                    value={key}
+                    className="p-2 cursor-pointer"
+                  >
                     {value}
                   </Listbox.Option>
                 ))}

@@ -53,19 +53,31 @@ function TopRiders({ view }) {
   if (isLoading) {
     return (
       <>
-        <div className="flex flex-col items-center justify-center space-y-2 p-6" key={1}>
+        <div
+          className="flex flex-col items-center justify-center space-y-2 p-6"
+          key={1}
+        >
           <div className="h-8 w-full bg-gray-200 animate-pulse" />
           <div className="h-4 w-full rounded-full bg-gray-200 animate-pulse" />
         </div>
-        <div className="flex flex-col items-center justify-center space-y-2 p-6" key={2}>
+        <div
+          className="flex flex-col items-center justify-center space-y-2 p-6"
+          key={2}
+        >
           <div className="h-8 w-full bg-gray-200 animate-pulse" />
           <div className="h-4 w-full rounded-full bg-gray-200 animate-pulse" />
         </div>
-        <div className="flex flex-col items-center justify-center space-y-2 p-6" key={3}>
+        <div
+          className="flex flex-col items-center justify-center space-y-2 p-6"
+          key={3}
+        >
           <div className="h-8 w-full bg-gray-200 animate-pulse" />
           <div className="h-4 w-full rounded-full bg-gray-200 animate-pulse" />
         </div>
-        <div className="flex flex-col items-center justify-center space-y-2 p-6" key={4}>
+        <div
+          className="flex flex-col items-center justify-center space-y-2 p-6"
+          key={4}
+        >
           <div className="h-8 w-full bg-gray-200 animate-pulse" />
           <div className="h-4 w-full rounded-full bg-gray-200 animate-pulse" />
         </div>
@@ -83,8 +95,12 @@ function TopRiders({ view }) {
     <table className="w-full">
       <thead>
         <tr>
-          <th className="text-start text-sm border-b border-slate-100 dark:border-slate-700">Name</th>
-          <th className="text-end text-sm border-b border-slate-100 dark:border-slate-700">Deliveries</th>
+          <th className="text-start text-sm border-b border-slate-100 dark:border-slate-700">
+            Name
+          </th>
+          <th className="text-end text-sm border-b border-slate-100 dark:border-slate-700">
+            Deliveries
+          </th>
         </tr>
       </thead>
 
@@ -118,7 +134,9 @@ function TopMerchants() {
   return (
     <Card>
       <header className="md:flex md:space-y-0 space-y-4">
-        <h6 className="flex-1 text-slate-900 dark:text-white capitalize">Top Performing Merchants</h6>
+        <h6 className="flex-1 text-slate-900 text-base 2xl:text-xl dark:text-white capitalize">
+          Top Performing Merchants
+        </h6>
         <div className="flex-none">
           <Listbox value={merPer} onChange={setMerPer}>
             <div className="relative">
@@ -127,7 +145,11 @@ function TopMerchants() {
               </Listbox.Button>
               <Listbox.Options className="z-10 w-[140px] absolute right-0 mt-1 max-h-60 overflow-auto rounded-md  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {Object.entries(merMap).map(([key, value]) => (
-                  <Listbox.Option key={key} value={key} className="p-2 cursor-pointer">
+                  <Listbox.Option
+                    key={key}
+                    value={key}
+                    className="p-2 cursor-pointer"
+                  >
                     {value}
                   </Listbox.Option>
                 ))}

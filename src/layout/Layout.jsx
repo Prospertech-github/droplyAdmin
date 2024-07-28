@@ -45,26 +45,35 @@ const Layout = () => {
   return (
     <>
       <ToastContainer />
-      <Header className={width > breakpoints.xl ? switchHeaderClass() : ""} />
-      {width > breakpoints.xl && !menuHidden && <Sidebar />}
+      <Header className={width > breakpoints.lg ? switchHeaderClass() : ""} />
+      {width > breakpoints.lg && !menuHidden && <Sidebar />}
 
       <MobileMenu
         className={`${
-          width < breakpoints.xl && mobileMenu
+          width < breakpoints.lg && mobileMenu
             ? "left-0 visible opacity-100  z-[9999]"
             : "left-[-300px] invisible opacity-0  z-[-999] "
         }`}
       />
       {/* mobile menu overlay*/}
-      {width < breakpoints.xl && mobileMenu && (
+      {width < breakpoints.lg && mobileMenu && (
         <div
           className="overlay bg-slate-900/50 backdrop-filter backdrop-blur-sm opacity-100 fixed inset-0 z-[999]"
-          onClick={() => setMobileMenu(false)}></div>
+          onClick={() => setMobileMenu(false)}
+        ></div>
       )}
-      <div className={`content-wrapper transition-all duration-150 ${width > 1280 ? switchHeaderClass() : ""}`}>
+      <div
+        className={`content-wrapper transition-all duration-150 ${
+          width > breakpoints.lg ? switchHeaderClass() : ""
+        }`}
+      >
         {/* md:min-h-screen will h-full*/}
         <div className="page-content page-min-height">
-          <div className={contentWidth === "boxed" ? "container mx-auto" : "container-fluid"}>
+          <div
+            className={
+              contentWidth === "boxed" ? "container mx-auto" : "container-fluid"
+            }
+          >
             <Suspense fallback={<Loading />}>
               <motion.div
                 // key={location.pathname}
@@ -89,7 +98,8 @@ const Layout = () => {
                   type: "tween",
                   ease: "easeInOut",
                   duration: 0.5,
-                }}>
+                }}
+              >
                 <Breadcrumbs />
                 {<Outlet />}
               </motion.div>
