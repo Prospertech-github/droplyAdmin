@@ -39,6 +39,7 @@ type Rider = {
   company: Organization;
   last_known_location?: string;
   last_known_location_updated_at?: string;
+  created_at: string;
 };
 
 type Order = {

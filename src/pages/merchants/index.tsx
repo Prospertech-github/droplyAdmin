@@ -22,14 +22,25 @@ const columns: ColumnDef<Organization>[] = [
       return (
         <div
           className={`px-2 py-1 rounded-full inline-flex text-xs ${
-            statusMap[props.row.original.status]?.className || "bg-yellow-500 text-white"
-          }`}>
+            statusMap[props.row.original.status]?.className ||
+            "bg-yellow-500 text-white"
+          }`}
+        >
           {statusMap[props.row.original.status]?.label || "Pending"}
         </div>
       );
     },
   },
   { accessorKey: "commission" },
+  {
+    header: "Date",
+    accessorKey: "created_at",
+    cell: ({ row }) => {
+      return (
+        <span>{new Date(row.original.date_created).toLocaleDateString()}</span>
+      );
+    },
+  },
   {
     accessorKey: "rider_count",
     header: "Riders",
@@ -48,7 +59,12 @@ const columns: ColumnDef<Organization>[] = [
 export default function Merchants() {
   return (
     <div>
-      <CustomTable baseUrl="auth/organizations" columns={columns} title="Merchants" selectFilters={[]} />
+      <CustomTable
+        baseUrl="auth/organizations"
+        columns={columns}
+        title="Merchants"
+        selectFilters={[]}
+      />
     </div>
   );
 }
