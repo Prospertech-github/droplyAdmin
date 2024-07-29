@@ -29,7 +29,11 @@ const LoginForm = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={schema} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={onSubmit}
+    >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit} className="space-y-4 ">
           <FormInput
@@ -49,8 +53,11 @@ const LoginForm = () => {
           />
           <div className="flex justify-between">
             {/* @ts-ignore */}
-            <Checkbox label="Keep me signed in" />
-            <Link to="/forgot-password" className="text-sm text-slate-800 dark:text-slate-400 leading-6 font-medium">
+            <Checkbox label="Keep me signed in" name={"rememberMe"} />
+            <Link
+              to="/forgot-password"
+              className="text-sm text-slate-800 dark:text-slate-400 leading-6 font-medium"
+            >
               Forgot Password?{" "}
             </Link>
           </div>
