@@ -12,6 +12,7 @@ import Card from "./ui/Card";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Button from "./ui/Button";
 import GlobalFilter from "@/pages/table/react-tables/GlobalFilter";
+import { useNavigate } from "react-router-dom";
 
 type CustomTableProps<Data> = {
   columns: ColumnDef<Data>[];
@@ -29,6 +30,7 @@ export default function CustomTable<Data>({
   columns,
   selectFilters,
 }: CustomTableProps<Data>) {
+  const navigate = useNavigate();
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -144,7 +146,13 @@ export default function CustomTable<Data>({
                 ) : data?.results?.length ? (
                   table.getRowModel().rows.map((row) => {
                     return (
-                      <tr key={row.id}>
+                      <tr
+                        key={row.id}
+                        className="cursor-pointer"
+                        onClick={() =>
+                          navigate(`/merchants/${(row?.original as any).id}`)
+                        }
+                      >
                         {row.getVisibleCells().map((cell) => {
                           return (
                             <td key={cell.id} className="table-td">

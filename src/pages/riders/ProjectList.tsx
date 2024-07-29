@@ -15,7 +15,7 @@ import {
   ColumnDef,
   flexRender,
 } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const columns: ColumnDef<Rider>[] = [
   {
@@ -76,7 +76,7 @@ const columns: ColumnDef<Rider>[] = [
 ];
 
 const ProjectList = ({ riders }: { riders: Rider[] }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const tableInstance = useReactTable({
     columns,
     data: riders,
@@ -121,7 +121,11 @@ const ProjectList = ({ riders }: { riders: Rider[] }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
                   {tableInstance.getRowModel().rows.map((row) => (
-                    <tr key={row.id}>
+                    <tr
+                      key={row.id}
+                      className="cursor-pointer"
+                      onClick={() => navigate(`/riders/${row?.original?.id}`)}
+                    >
                       {row.getVisibleCells().map((cell) => (
                         <td className="table-td" key={cell.id}>
                           {flexRender(
