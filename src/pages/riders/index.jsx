@@ -28,7 +28,33 @@ const ProjectPostPage = () => {
         <div
           className={`${
             width < breakpoints.md ? "space-x-rb" : ""
-          } md:flex md:space-x-4 md:justify-end items-center rtl:space-x-reverse`}></div>
+          } md:flex md:space-x-4 md:justify-end items-center rtl:space-x-reverse`}
+        >
+          <Button
+            icon="heroicons:list-bullet"
+            text="List view"
+            disabled={isLoading}
+            className={`${
+              filler === "list"
+                ? "bg-slate-900 dark:bg-slate-700  text-white"
+                : " bg-white dark:bg-slate-800 dark:text-slate-300"
+            }   h-min text-sm font-normal`}
+            iconClass=" text-lg"
+            onClick={() => setfiller("list")}
+          />
+          <Button
+            icon="heroicons-outline:view-grid"
+            text="Grid view"
+            disabled={isLoading}
+            className={`${
+              filler === "grid"
+                ? "bg-slate-900 dark:bg-slate-700 text-white"
+                : " bg-white dark:bg-slate-800 dark:text-slate-300"
+            }   h-min text-sm font-normal`}
+            iconClass=" text-lg"
+            onClick={() => setfiller("grid")}
+          />
+        </div>
       </div>
       {isLoading && filler === "grid" && <GridLoading count={4} />}
       {isLoading && filler === "list" && <TableLoading count={4} />}
