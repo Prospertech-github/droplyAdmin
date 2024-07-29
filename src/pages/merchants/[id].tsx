@@ -19,12 +19,20 @@ export default function MerchantDetails() {
         {data && (
           <>
             {data.status !== "approved" && (
-              <button disabled={decide.isLoading} onClick={() => setDecision("approve")} className="btn btn-primary">
+              <button
+                disabled={decide.isLoading}
+                onClick={() => setDecision("approve")}
+                className="btn btn-primary"
+              >
                 Approve
               </button>
             )}
             {data.status !== "declined" && (
-              <button disabled={decide.isLoading} onClick={() => setDecision("decline")} className="btn btn-danger">
+              <button
+                disabled={decide.isLoading}
+                onClick={() => setDecision("decline")}
+                className="btn btn-danger"
+              >
                 Decline
               </button>
             )}
@@ -36,31 +44,41 @@ export default function MerchantDetails() {
         activeModal={!!decision}
         onClose={() => setDecision(undefined)}
         title={`${decision || "Decide on"} Merchant`}
-        centered>
+        centered
+      >
         <p>
-          Are you sure you want to {decision} this merchant? Doing so will send an email to the merchant informing them
-          of your decision.
+          Are you sure you want to {decision} this merchant? Doing so will send
+          an email to the merchant informing them of your decision.
         </p>
         <div className="mt-4 flex items-center justify-end gap-4">
-          <button className="btn btn-primary" onClick={() => setDecision(undefined)}>
+          <button
+            className="btn btn-primary"
+            onClick={() => setDecision(undefined)}
+          >
             Cancel
           </button>
           <button
             disabled={decide.isLoading}
             onClick={() => {
               decide
-                .mutateAsync({ id, decision: decision as "approve" | "decline" })
+                .mutateAsync({
+                  id,
+                  decision: decision as "approve" | "decline",
+                })
                 .then(() => {
                   toast.success(`Merchant ${decision}d successfully`);
                 })
                 .catch((e) => {
-                  toast.error(e?.message || `Something went wrong. Please try again.`);
+                  toast.error(
+                    e?.message || `Something went wrong. Please try again.`
+                  );
                 })
                 .finally(() => {
                   setDecision(undefined);
                 });
             }}
-            className="btn btn-danger">
+            className="btn btn-danger"
+          >
             {decision || "Decide"}
           </button>
         </div>
@@ -164,15 +182,15 @@ function MerchantDetailsContent() {
               <tbody>
                 <tr>
                   <th>Bank Name</th>
-                  <td>{data.bank_info?.bank_name}</td>
+                  <td>{data.bank_info?.bank_name || "------"}</td>
                 </tr>
                 <tr>
                   <th>Account Name</th>
-                  <td>{data.bank_info?.account_name}</td>
+                  <td>{data.bank_info?.account_name || "------"}</td>
                 </tr>
                 <tr>
                   <th>Account Number</th>
-                  <td>{data.bank_info?.account_number}</td>
+                  <td>{data.bank_info?.account_number || "------"}</td>
                 </tr>
               </tbody>
             </table>
@@ -183,7 +201,10 @@ function MerchantDetailsContent() {
           <div
             style={{
               height: "500px",
-            }}></div>
+            }}
+          >
+            {/* <img src={data.cac_doc} className="w-full h-full objc" alt="cac docs" /> */}
+          </div>
         </div>
       </div>
     </>

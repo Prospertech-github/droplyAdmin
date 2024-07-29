@@ -3,7 +3,13 @@ import { advancedTable } from "../../../constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Tooltip from "@/components/ui/Tooltip";
-import { useTable, useRowSelect, useSortBy, useGlobalFilter, usePagination } from "react-table";
+import {
+  useTable,
+  useRowSelect,
+  useSortBy,
+  useGlobalFilter,
+  usePagination,
+} from "react-table";
 import GlobalFilter from "./GlobalFilter";
 import { useOrders } from "@/data/orders";
 import { Link } from "react-router-dom";
@@ -22,7 +28,9 @@ const COLUMNS = [
     Cell: (row) => {
       return (
         <div>
-          <span className="text-sm text-slate-600 dark:text-slate-300 capitalize">{row?.cell?.value}</span>
+          <span className="text-sm text-slate-600 dark:text-slate-300 capitalize">
+            {row?.cell?.value}
+          </span>
         </div>
       );
     },
@@ -31,7 +39,9 @@ const COLUMNS = [
     Header: "date",
     accessor: "created_at",
     Cell: (row) => {
-      return <span>{new Date(row?.cell?.value || null).toLocaleDateString()}</span>;
+      return (
+        <span>{new Date(row?.cell?.value || null).toLocaleDateString()}</span>
+      );
     },
   },
   {
@@ -65,7 +75,8 @@ const COLUMNS = [
           <span
             className={` inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 ${
               statusMap[row?.cell?.value] || "bg-slate-200 text-slate-600"
-            }`}>
+            }`}
+          >
             {row?.cell?.value}
           </span>
         </span>
@@ -104,20 +115,27 @@ const COLUMNS = [
   },
 ];
 
-const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
-  const defaultRef = React.useRef();
-  const resolvedRef = ref || defaultRef;
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
-  React.useEffect(() => {
-    resolvedRef.current.indeterminate = indeterminate;
-  }, [resolvedRef, indeterminate]);
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
 
-  return (
-    <>
-      <input type="checkbox" ref={resolvedRef} {...rest} className="table-checkbox" />
-    </>
-  );
-});
+    return (
+      <>
+        <input
+          type="checkbox"
+          ref={resolvedRef}
+          {...rest}
+          className="table-checkbox"
+        />
+      </>
+    );
+  }
+);
 
 const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
   const columns = useMemo(() => COLUMNS, []);
@@ -177,7 +195,7 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
     <>
       <Card>
         <div className="md:flex justify-between items-center mb-6">
-          <h4 className="card-title">{title}</h4>
+          <h4 className="card-title text-base 2xl:text-xl">{title}</h4>
           <div>
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           </div>
@@ -187,17 +205,27 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
             <div className="overflow-hidden ">
               <table
                 className="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700"
-                {...getTableProps}>
+                {...getTableProps}
+              >
                 <thead className="bg-slate-200 dark:bg-slate-700">
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                       {headerGroup.headers.map((column) => (
                         <th
-                          {...column.getHeaderProps(column.getSortByToggleProps())}
+                          {...column.getHeaderProps(
+                            column.getSortByToggleProps()
+                          )}
                           scope="col"
-                          className=" table-th ">
+                          className=" table-th "
+                        >
                           {column.render("Header")}
-                          <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
+                          <span>
+                            {column.isSorted
+                              ? column.isSortedDesc
+                                ? " 🔽"
+                                : " 🔼"
+                              : ""}
+                          </span>
                         </th>
                       ))}
                     </tr>
@@ -205,11 +233,16 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
                 </thead>
                 <tbody
                   className="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700"
-                  {...getTableBodyProps}>
+                  {...getTableBodyProps}
+                >
                   {page.map((row) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
+                      <tr
+                        {...row.getRowProps()}
+                        className="cursor-pointer"
+                        onClick={() => navigate(`/orders/${row?.original?.id}`)}
+                      >
                         {row.cells.map((cell) => {
                           return (
                             <td {...cell.getCellProps()} className="table-td">
@@ -230,7 +263,8 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
             <select
               className="form-control py-2 w-max"
               value={pageSize}
-              onChange={(e) => setPageSize(Number(e.target.value))}>
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
               {[10, 25, 50].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
                   Show {pageSize}
@@ -247,17 +281,23 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
           <ul className="flex items-center  space-x-3  rtl:space-x-reverse">
             <li className="text-xl leading-4 text-slate-900 dark:text-white rtl:rotate-180">
               <button
-                className={` ${!canPreviousPage ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={` ${
+                  !canPreviousPage ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 onClick={() => gotoPage(0)}
-                disabled={!canPreviousPage}>
+                disabled={!canPreviousPage}
+              >
                 <Icon icon="heroicons:chevron-double-left-solid" />
               </button>
             </li>
             <li className="text-sm leading-4 text-slate-900 dark:text-white rtl:rotate-180">
               <button
-                className={` ${!canPreviousPage ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={` ${
+                  !canPreviousPage ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 onClick={() => previousPage()}
-                disabled={!canPreviousPage}>
+                disabled={!canPreviousPage}
+              >
                 Prev
               </button>
             </li>
@@ -271,16 +311,20 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
                       ? "bg-slate-900 dark:bg-slate-600  dark:text-slate-200 text-white font-medium "
                       : "bg-slate-100 dark:bg-slate-700 dark:text-slate-400 text-slate-900  font-normal  "
                   }    text-sm rounded leading-[16px] flex h-6 w-6 items-center justify-center transition-all duration-150`}
-                  onClick={() => gotoPage(pageIdx)}>
+                  onClick={() => gotoPage(pageIdx)}
+                >
                   {page + 1}
                 </button>
               </li>
             ))}
             <li className="text-sm leading-4 text-slate-900 dark:text-white rtl:rotate-180">
               <button
-                className={` ${!canNextPage ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={` ${
+                  !canNextPage ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 onClick={() => nextPage()}
-                disabled={!canNextPage}>
+                disabled={!canNextPage}
+              >
                 Next
               </button>
             </li>
@@ -288,7 +332,10 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
               <button
                 onClick={() => gotoPage(pageCount - 1)}
                 disabled={!canNextPage}
-                className={` ${!canNextPage ? "opacity-50 cursor-not-allowed" : ""}`}>
+                className={` ${
+                  !canNextPage ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
                 <Icon icon="heroicons:chevron-double-right-solid" />
               </button>
             </li>

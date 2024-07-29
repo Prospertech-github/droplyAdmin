@@ -64,14 +64,18 @@ const RiderDetailsPage = () => {
   if (!rider.data) {
     return (
       <div className="h-full flex flex-col p-6 lg:p-16 justify-center items-center text-center">
-        <div className="text-4xl font-semibold text-slate-800 dark:text-slate-100">Rider not found</div>
-        <div className="text-xl text-slate-600 dark:text-slate-300">The rider you are looking for does not exist.</div>
+        <div className="text-4xl font-semibold text-slate-800 dark:text-slate-100">
+          Rider not found
+        </div>
+        <div className="text-xl text-slate-600 dark:text-slate-300">
+          The rider you are looking for does not exist.
+        </div>
       </div>
     );
   }
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-12 gap-5">
+      <div className="flex flex-col gap-5">
         <Card className="col-span-full">
           <div className="grid grid-cols-[auto,1fr,auto] items-start gap-6">
             <div>
@@ -88,39 +92,51 @@ const RiderDetailsPage = () => {
                   </span>
                 </h2>
                 <p>
-                  <span className="text-sm text-slate-600 dark:text-slate-300">{rider.data.user.phone}</span>
-                </p>
-                <p>
-                  <span className="text-sm text-slate-600 dark:text-slate-300">{rider.data.user.email}</span>
-                </p>
-                <p>
-                  <span className="text-sm text-slate-600 dark:text-slate-300">Lagos, Nigeria</span>
+                  <span className="text-sm text-slate-600 dark:text-slate-300">
+                    {rider.data.user.phone}
+                  </span>
                 </p>
                 <p>
                   <span className="text-sm text-slate-600 dark:text-slate-300">
-                    Member since {dayjs(rider.data.user.date_joined).format("MMMM, YYYY")}.
+                    {rider.data.user.email}
+                  </span>
+                </p>
+                <p>
+                  <span className="text-sm text-slate-600 dark:text-slate-300">
+                    Lagos, Nigeria
+                  </span>
+                </p>
+                <p>
+                  <span className="text-sm text-slate-600 dark:text-slate-300">
+                    Member since{" "}
+                    {dayjs(rider.data.user.date_joined).format("MMMM, YYYY")}.
                   </span>
                 </p>
               </address>
             </div>
             <div className="flex flex-col justify-between items-end gap-4">
               <span className="flex items-center gap-1 text-xs">
-                Online <span className="bg-green-500 h-2 w-2 rounded-full inline-block" />
+                Online{" "}
+                <span className="bg-green-500 h-2 w-2 rounded-full inline-block" />
               </span>
-              <Button className="bg-orange-200 dark:bg-orange-400">Suspend Rider</Button>
+              <Button className="bg-orange-200 dark:bg-orange-400">
+                Suspend Rider
+              </Button>
             </div>
           </div>
         </Card>
-        <Card className="xl:col-span-3 col-span-12 lg:col-span-5 h-full">
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+        <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
+          <Card title="Deliveries" className="h-full">
+            <BasicArea />
+          </Card>
+          <Card title="Activity" headerslot={<SelectMonth />} className="">
+            <TrackingParcel />
+          </Card>
+        </div>
+        <Card className="h-full">
+          <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-2 lg:grid-cols-4 gap-4">
             <GroupChart4 />
           </div>
-        </Card>
-        <Card title="Deliveries" className="xl:col-span-5 col-span-12 lg:col-span-7 h-full">
-          <BasicArea />
-        </Card>
-        <Card title="Activity" headerslot={<SelectMonth />} className="xl:col-span-4 col-span-12">
-          <TrackingParcel />
         </Card>
       </div>
       <div className="col-span-full">

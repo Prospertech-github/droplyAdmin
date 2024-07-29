@@ -11,7 +11,9 @@ export default function RevenueChart() {
   return (
     <Card>
       <header className="md:flex md:space-y-0 space-y-4">
-        <h6 className="flex-1 text-slate-900 dark:text-white capitalize">Revenue chart</h6>
+        <h6 className="flex-1 text-base 2xl:text-xl text-slate-900 dark:text-white capitalize">
+          Revenue chart
+        </h6>
         <div className="flex-none">
           <Listbox value={view} onChange={setView}>
             <div className="relative">
@@ -20,7 +22,11 @@ export default function RevenueChart() {
               </Listbox.Button>
               <Listbox.Options className="z-10 w-[140px] absolute right-0 mt-1 max-h-60 overflow-auto rounded-md  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {Object.entries(map).map(([key, value]) => (
-                  <Listbox.Option key={key} value={key} className="p-2 cursor-pointer">
+                  <Listbox.Option
+                    key={key}
+                    value={key}
+                    className="p-2 cursor-pointer"
+                  >
                     {value}
                   </Listbox.Option>
                 ))}
@@ -47,7 +53,8 @@ function RevenueChartBar({ height = 300, view }) {
         style={{
           height,
         }}
-        key={1}>
+        key={1}
+      >
         <div className="h-8 w-full bg-gray-200 animate-pulse" />
         <div className="h-4 w-full rounded-full bg-gray-200 animate-pulse" />
       </div>
@@ -59,7 +66,8 @@ function RevenueChartBar({ height = 300, view }) {
         className="flex flex-col gap-6  text-center items-center justify-center"
         style={{
           height,
-        }}>
+        }}
+      >
         <h4>Unable to load Chart</h4>
       </div>
     );
@@ -67,7 +75,10 @@ function RevenueChartBar({ height = 300, view }) {
 
   const series = [
     {
-      data: view === "7_days" ? chart.data[view].map((item) => item.revenue) : Object.values(chart.data[view]),
+      data:
+        view === "7_days"
+          ? chart.data[view].map((item) => item.revenue)
+          : Object.values(chart.data[view]),
     },
   ];
   const options = {
@@ -117,7 +128,10 @@ function RevenueChartBar({ height = 300, view }) {
       },
     },
     xaxis: {
-      categories: view === "7_days" ? chart.data[view].map((item) => item.day) : Object.keys(chart.data[view]),
+      categories:
+        view === "7_days"
+          ? chart.data[view].map((item) => item.day)
+          : Object.keys(chart.data[view]),
       labels: {
         style: {
           colors: isDark ? "#CBD5E1" : "#475569",
@@ -138,7 +152,9 @@ function RevenueChartBar({ height = 300, view }) {
       left: 0,
     },
   };
-  return <Chart type="area" height={height} series={series} options={options} />;
+  return (
+    <Chart type="area" height={height} series={series} options={options} />
+  );
 }
 
 const map = {
