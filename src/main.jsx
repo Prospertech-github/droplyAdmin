@@ -10,9 +10,11 @@ import * as Sentry from "@sentry/react";
 import store from "./store";
 import ReactQueryProvider from "./providers/react-query.tsx";
 
+console.log(import.meta.env.PROD);
+
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN_KEY,
-  enabled: !import.meta.env.DEV,
+  enabled: import.meta.env.PROD,
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
