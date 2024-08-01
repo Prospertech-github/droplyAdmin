@@ -37,19 +37,29 @@ axios.interceptors.response.use(
         message === "Given token not valid for any token type" ||
         message === "Authentication credentials were not provided."
       ) {
-        const token = localStorage.getItem(API_TOKEN);
+        const token = {
+          ls: localStorage.getItem(API_TOKEN),
+          ss: sessionStorage.getItem(API_TOKEN),
+        };
 
-        if (token) {
+        if (token.ls || token.ss) {
           if (!refreshPromise) {
-            refreshPromise = refreshToken(token).then(() => {
-              refreshPromise = null;
-            });
+            refreshPromise = refreshToken(token.ls || token.ss || "").then(
+              () => {
+                refreshPromise = null;
+              }
+            );
           }
 
           try {
             const { data } = await refreshPromise;
 
-            localStorage.setItem(API_TOKEN, data.refresh);
+            if (token.ls) {
+              localStorage.setItem(API_TOKEN, data.refresh);
+            } else if (token.ss) {
+              sessionStorage.setItem(API_TOKEN, data.refresh);
+            }
+
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + data.access;
 
@@ -68,17 +78,28 @@ axios.interceptors.response.use(
 );
 
 export async function fetchUserIfTokenExists() {
-  const token = localStorage.getItem(API_TOKEN);
+  const token = {
+    ls: localStorage.getItem(API_TOKEN),
+    ss: sessionStorage.getItem(API_TOKEN),
+  };
 
-  if (token && axios.defaults.headers.common["Authorization"]) {
+  if (
+    (token.ls || token.ss) &&
+    axios.defaults.headers.common["Authorization"]
+  ) {
     return null;
   }
 
-  if (token) {
-    const data = await refreshToken(token);
+  if (token.ls || token.ss) {
+    const data = await refreshToken(token.ls || token.ss || "");
 
-    localStorage.setItem(API_TOKEN, data.refresh);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + data.access;
+    if (token.ls) {
+      localStorage.setItem(API_TOKEN, data.refresh);
+    } else if (token.ss) {
+      sessionStorage.setItem(API_TOKEN, data.refresh);
+    }
+
+    axios.defaults.headers.common["Authorization"] = "Bearer " + data?.access;
   } else {
     throw new Error("No token found");
   }
@@ -91,6 +112,7 @@ export async function defaultQueryFn<T>({ queryKey }: QueryFunctionContext) {
 }
 
 // On localStorage value change from another tab, logout
+//! Make this work for sessionStorage
 window.addEventListener("storage", (event) => {
   if (event.key === API_TOKEN && !event.newValue) {
     logout();
