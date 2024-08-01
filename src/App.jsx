@@ -1,5 +1,10 @@
 import React, { lazy, Suspense } from "react";
-import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
 import ErrorBoundary from "./components/error-boundary";
 import { fetchUserIfTokenExists } from "./utils/api";
 const Dashboard = lazy(() => import("./pages/dashboard"));
@@ -46,7 +51,10 @@ const router = createBrowserRouter(
       <Route
         path="/"
         loader={() => {
-          if (localStorage.getItem(API_TOKEN)) {
+          if (
+            localStorage.getItem(API_TOKEN) ||
+            sessionStorage.getItem(API_TOKEN)
+          ) {
             return new Response("", {
               status: 302,
               headers: {
@@ -66,7 +74,10 @@ const router = createBrowserRouter(
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/password/reset/confirm/:uid/:token" element={<PasswordResetPage />} />
+        <Route
+          path="/password/reset/confirm/:uid/:token"
+          element={<PasswordResetPage />}
+        />
       </Route>
       <Route loader={loader} path="/*" element={<Layout />}>
         <Route path="dashboard" element={<Dashboard />} />

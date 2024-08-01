@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import Dropdown from "@/components/ui/Dropdown";
 import Icon from "@/components/ui/Icon";
-import { logout } from "@/api/logout";
 import { useLoggedInUser } from "@/data/auth";
 import UserAvatar from "@/assets/images/all-img/user.png";
+import { logout } from "@/utils/api/logout";
 
 const Profile = () => {
   const navigate = useNavigate();

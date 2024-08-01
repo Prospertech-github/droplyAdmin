@@ -1,11 +1,10 @@
+import { ChangeEvent } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useLogin from "@/mutations/auth/login";
+import { Formik } from "formik";
 import { object, string } from "yup";
-import { useLocation, useNavigate } from "react-router-dom";
 import Checkbox from "@/components/ui/Checkbox";
 import Button from "@/components/ui/Button";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Formik } from "formik";
 import FormInput from "@/components/form-input";
 
 const schema = object({
@@ -16,16 +15,18 @@ const schema = object({
 const initialValues = {
   email: "",
   password: "",
+  rememberMe: false,
 };
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const login = useLogin();
+  const { mutateAsync: login, error } = useLogin();
   const { state } = useLocation();
-  const onSubmit = (data: Record<"email" | "password", string>) => {
-    login.mutateAsync(data).then(() => {
-      navigate(state?.from || "/dashboard", { replace: true });
-    });
+
+  const onSubmit = async (data: Record<"email" | "password", string>) => {
+    await login(data);
+
+    navigate(state?.from || "/dashboard", { replace: true });
   };
 
   return (
@@ -34,14 +35,14 @@ const LoginForm = () => {
       validationSchema={schema}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, values, isSubmitting, setFieldValue }) => (
         <form onSubmit={handleSubmit} className="space-y-4 ">
           <FormInput
             name="email"
             label="email"
             type="email"
             className="h-[48px]"
-            error={login.error?.response?.data?.email}
+            error={error?.response?.data?.email}
           />
           <FormInput
             defaultValue=""
@@ -49,11 +50,18 @@ const LoginForm = () => {
             label="password"
             type="password"
             className="h-[48px]"
-            error={login.error?.response?.data?.password}
+            error={error?.response?.data?.password}
           />
           <div className="flex justify-between">
             {/* @ts-ignore */}
-            <Checkbox label="Keep me signed in" name={"rememberMe"} />
+            <Checkbox
+              label="Keep me signed in"
+              name={"rememberMe"}
+              value={values.rememberMe}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setFieldValue("rememberMe", e.target.checked)
+              }
+            />
             <Link
               to="/forgot-password"
               className="text-sm text-slate-800 dark:text-slate-400 leading-6 font-medium"
@@ -65,8 +73,8 @@ const LoginForm = () => {
           {/* @ts-ignore */}
           <Button
             type="submit"
-            isLoading={login.isLoading}
-            disabled={login.isLoading}
+            isLoading={isSubmitting}
+            disabled={isSubmitting}
             text="Sign in"
             className="btn btn-dark block w-full text-center "
             loadingText="Signing in..."
