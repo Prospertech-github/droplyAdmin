@@ -203,7 +203,11 @@ function MerchantDetailsContent() {
               height: "500px",
             }}
           >
-            {/* <img src={data.cac_doc} className="w-full h-full objc" alt="cac docs" /> */}
+            <img
+              src={data.cac_doc}
+              className="w-full h-full objc"
+              alt="cac docs"
+            />
           </div>
         </div>
       </div>
