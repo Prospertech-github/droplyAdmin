@@ -103,3 +103,10 @@ type Loan = {
     company: Organization;
   };
 };
+
+type PaginatedResponse<T> = {
+  count: number;
+  next: boolean | null;
+  previous: boolean | null;
+  results: T;
+};
