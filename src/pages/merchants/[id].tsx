@@ -1,16 +1,19 @@
-import { useOrganization } from "@/data/organizations";
-import { useParams } from "react-router-dom";
-import styles from "./styles.module.css";
 import { useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useOrganization } from "@/data/organizations";
+import styles from "./styles.module.css";
 import Modal from "@/components/ui/Modal";
 import useDecideOrganization from "@/mutations/organizations";
-import { toast } from "react-toastify";
 
 export default function MerchantDetails() {
   const { id } = useParams() as { id: string };
-  const { data } = useOrganization(id);
+  const { merchant: data } = useLoaderData() as {
+    merchant: Organization;
+    title: string;
+  };
   const [decision, setDecision] = useState<"approve" | "decline">();
-  const decide = useDecideOrganization();
+  const { mutateAsync: decide, isLoading } = useDecideOrganization();
 
   return (
     <div className={styles.table}>
@@ -20,7 +23,7 @@ export default function MerchantDetails() {
           <>
             {data.status !== "approved" && (
               <button
-                disabled={decide.isLoading}
+                disabled={isLoading}
                 onClick={() => setDecision("approve")}
                 className="btn btn-primary"
               >
@@ -29,7 +32,7 @@ export default function MerchantDetails() {
             )}
             {data.status !== "declined" && (
               <button
-                disabled={decide.isLoading}
+                disabled={isLoading}
                 onClick={() => setDecision("decline")}
                 className="btn btn-danger"
               >
@@ -58,17 +61,16 @@ export default function MerchantDetails() {
             Cancel
           </button>
           <button
-            disabled={decide.isLoading}
+            disabled={isLoading}
             onClick={() => {
-              decide
-                .mutateAsync({
-                  id,
-                  decision: decision as "approve" | "decline",
-                })
+              decide({
+                id,
+                decision: decision as "approve" | "decline",
+              })
                 .then(() => {
                   toast.success(`Merchant ${decision}d successfully`);
                 })
-                .catch((e) => {
+                .catch((e: any) => {
                   toast.error(
                     e?.message || `Something went wrong. Please try again.`
                   );
@@ -79,7 +81,7 @@ export default function MerchantDetails() {
             }}
             className="btn btn-danger"
           >
-            {decision || "Decide"}
+            {isLoading ? "Loading..." : decision || "Decide"}
           </button>
         </div>
       </Modal>

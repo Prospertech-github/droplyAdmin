@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import GroupChart4 from "@/components/partials/widget/chart/group-chart-4";
@@ -45,23 +45,25 @@ import dayjs from "dayjs";
 
 const RiderDetailsPage = () => {
   const { id } = useParams();
-  const rider = useRider(id);
+  const { rider } = useLoaderData();
 
-  if (rider.isLoading) {
-    return (
-      <>
-        <div className="space-y-5">
-          <Card className="h-24 animate-pulse w-full"></Card>
-          <Card className="h-24 animate-pulse w-full"></Card>
-          <Card className="h-24 animate-pulse w-full"></Card>
-          <Card className="h-24 animate-pulse w-full"></Card>
-          <Card className="h-24 animate-pulse w-full"></Card>
-        </div>
-      </>
-    );
-  }
+  console.log(rider);
 
-  if (!rider.data) {
+  // if (rider?.isLoading) {
+  //   return (
+  //     <>
+  //       <div className="space-y-5">
+  //         <Card className="h-24 animate-pulse w-full"></Card>
+  //         <Card className="h-24 animate-pulse w-full"></Card>
+  //         <Card className="h-24 animate-pulse w-full"></Card>
+  //         <Card className="h-24 animate-pulse w-full"></Card>
+  //         <Card className="h-24 animate-pulse w-full"></Card>
+  //       </div>
+  //     </>
+  //   );
+  // }
+
+  if (!rider) {
     return (
       <div className="h-full flex flex-col p-6 lg:p-16 justify-center items-center text-center">
         <div className="text-4xl font-semibold text-slate-800 dark:text-slate-100">
@@ -73,32 +75,33 @@ const RiderDetailsPage = () => {
       </div>
     );
   }
+
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-5">
         <Card className="col-span-full">
           <div className="grid grid-cols-[auto,1fr,auto] items-start gap-6">
             <div>
-              <span className="w-24 rounded-full flex h-24 justify-center items-center bg-sky-200 dark:bg-purple-900">
-                {rider.data.user.first_name[0]}
-                {rider.data.user.last_name[0]}
+              <span className="w-24 rounded-full flex h-24 justify-center items-center bg-sky-200 dark:bg-purple-900 capitalize">
+                {rider.user.first_name[0]}
+                {rider.user.last_name[0]}
               </span>
             </div>
             <div>
               <address className="flex flex-col justify-between">
                 <h2 className="-mt-4">
-                  <span className="text-xl font-semibold text-slate-800 dark:text-slate-100">
-                    {rider.data.user.first_name} {rider.data.user.last_name}
+                  <span className="text-xl font-semibold text-slate-800 dark:text-slate-100 capitalize">
+                    {rider.user.first_name} {rider.user.last_name}
                   </span>
                 </h2>
                 <p>
                   <span className="text-sm text-slate-600 dark:text-slate-300">
-                    {rider.data.user.phone}
+                    {rider.user.phone}
                   </span>
                 </p>
                 <p>
                   <span className="text-sm text-slate-600 dark:text-slate-300">
-                    {rider.data.user.email}
+                    {rider.user.email}
                   </span>
                 </p>
                 <p>
@@ -109,7 +112,7 @@ const RiderDetailsPage = () => {
                 <p>
                   <span className="text-sm text-slate-600 dark:text-slate-300">
                     Member since{" "}
-                    {dayjs(rider.data.user.date_joined).format("MMMM, YYYY")}.
+                    {dayjs(rider.user.date_joined).format("MMMM, YYYY")}.
                   </span>
                 </p>
               </address>

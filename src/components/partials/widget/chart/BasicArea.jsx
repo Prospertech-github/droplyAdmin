@@ -1,12 +1,19 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import Chart from "react-apexcharts";
 import useDarkMode from "@/hooks/useDarkMode";
+import { useRiderDeliveriesChart } from "@/data/riders";
 
 const BasicArea = ({ height = 350 }) => {
   const [isDark] = useDarkMode();
+  const { id } = useParams();
+  const { data } = useRiderDeliveriesChart(id || "", {
+    enabled: !!id,
+  });
+
   const series = [
     {
-      data: [90, 70, 85, 60, 80, 70, 90, 75, 60, 80],
+      data: data?.map((item) => item.value) || [],
     },
   ];
   const options = {
@@ -51,20 +58,7 @@ const BasicArea = ({ height = 350 }) => {
       },
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: data?.map((item) => item.month) || [],
       labels: {
         style: {
           colors: isDark ? "#CBD5E1" : "#475569",
