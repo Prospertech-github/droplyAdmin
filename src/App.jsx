@@ -17,6 +17,9 @@ import { API_TOKEN } from "./app-constants";
 import SettingsLayout from "./layout/settings";
 import ForgotPasswordPage from "./pages/forgot-password";
 import PasswordResetPage from "./pages/password-reset";
+import { queryClient } from "./providers/react-query";
+import merchantDetailsLoader from "./utils/route-loaders/merchant-details";
+import riderDetailsLoader from "./utils/route-loaders/riders-details";
 const Riders = lazy(() => import("./pages/riders"));
 const RiderDetails = lazy(() => import("./pages/riders/rider-details"));
 const Orders = lazy(() => import("./pages/orders"));
@@ -82,12 +85,20 @@ const router = createBrowserRouter(
       <Route loader={loader} path="/*" element={<Layout />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="riders" element={<Riders />} />
-        <Route path="riders/:id" element={<RiderDetails />} />
+        <Route
+          path="riders/:id"
+          element={<RiderDetails />}
+          loader={riderDetailsLoader}
+        />
         <Route path="orders" element={<Orders />} />
         <Route path="orders/:id" element={<OrderDetails />} />
         <Route path="commissions" element={<Wallet />} />
         <Route path="merchants" element={<Merchants />} />
-        <Route path="merchants/:id" element={<MerchantDetails />} />
+        <Route
+          path="merchants/:id"
+          element={<MerchantDetails />}
+          loader={merchantDetailsLoader}
+        />
         <Route path="loans" element={<Loans />} />
         <Route path="loans/:id" element={<LoanDetails />} />
         <Route path="customers" element={<Users />} />

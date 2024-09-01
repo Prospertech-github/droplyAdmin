@@ -2,10 +2,18 @@ import { useMemo } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import { menuItems } from "@/constant/data";
 import Icon from "@/components/ui/Icon";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Breadcrumbs = () => {
   const location = useLocation();
   const locationName = location.pathname.replace("/", "");
+
+  const queryClient = useQueryClient();
+
+  const pageTitle = queryClient.getQueryData<string | undefined>([
+    "page-title",
+    window.location.href,
+  ]);
 
   const title: Partial<Record<
     "title" | "link" | "icon" | "childtitle" | "childlink",
@@ -50,7 +58,7 @@ const Breadcrumbs = () => {
                   key={index}
                   className="capitalize text-slate-500 dark:text-slate-400"
                 >
-                  {title?.title || title?.childtitle || str}
+                  {title?.title || title?.childtitle || pageTitle || str}
                 </li>
               );
             }
