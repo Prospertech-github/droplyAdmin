@@ -47,6 +47,8 @@ const RiderDetailsPage = () => {
   const { id } = useParams();
   const { rider } = useLoaderData();
 
+  console.log(rider);
+
   // if (rider?.isLoading) {
   //   return (
   //     <>
@@ -116,10 +118,12 @@ const RiderDetailsPage = () => {
               </address>
             </div>
             <div className="flex flex-col justify-between items-end gap-4">
-              {/* <span className="flex items-center gap-1 text-xs">
-                Online{" "}
-                <span className="bg-green-500 h-2 w-2 rounded-full inline-block" />
-              </span> */}
+              {rider.is_online && (
+                <span className="flex items-center gap-1 text-xs">
+                  Online{" "}
+                  <span className="bg-green-500 h-2 w-2 rounded-full inline-block" />
+                </span>
+              )}
               <Button className="bg-orange-200 dark:bg-orange-400">
                 Suspend Rider
               </Button>
