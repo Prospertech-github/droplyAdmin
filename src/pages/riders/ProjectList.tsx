@@ -16,6 +16,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { Link, useNavigate } from "react-router-dom";
+import GlobalFilter from "../table/react-tables/GlobalFilter";
 
 const columns: ColumnDef<Rider>[] = [
   {
@@ -91,6 +92,7 @@ const ProjectList = ({ riders }: { riders: Rider[] }) => {
       <Card noborder>
         <div className="md:flex justify-between items-center mb-6">
           <h4 className="card-title">Riders List</h4>
+          <GlobalFilter filter={""} setFilter={() => console.log("")} />
         </div>
         <div className="overflow-x-auto -mx-6">
           <div className="inline-block min-w-full align-middle">
