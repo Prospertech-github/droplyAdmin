@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { defaultQueryFn } from "@/utils/api";
+import { APP_MODE } from "@/app-constants";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,6 +17,11 @@ export default function ReactQueryProvider({
   children: React.ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      {APP_MODE === "development" && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
+    </QueryClientProvider>
   );
 }
