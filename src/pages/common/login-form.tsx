@@ -23,7 +23,7 @@ const LoginForm = () => {
   const { mutateAsync: login, error } = useLogin();
   const { state } = useLocation();
 
-  const onSubmit = async (data: Record<"email" | "password", string>) => {
+  const onSubmit = async (data: typeof initialValues) => {
     await login(data);
 
     navigate(state?.from || "/dashboard", { replace: true });

@@ -8,8 +8,6 @@ _axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 export const axios = _axios.create();
 
-let refreshPromise: Promise<any> | null = null;
-
 axios.defaults.headers.common.Accept = "application/json";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -43,16 +41,8 @@ axios.interceptors.response.use(
         };
 
         if (token.ls || token.ss) {
-          if (!refreshPromise) {
-            refreshPromise = refreshToken(token.ls || token.ss || "").then(
-              () => {
-                refreshPromise = null;
-              }
-            );
-          }
-
           try {
-            const { data } = await refreshPromise;
+            const data = await refreshToken(token.ls || token.ss || "");
 
             if (token.ls) {
               localStorage.setItem(API_TOKEN, data.refresh);

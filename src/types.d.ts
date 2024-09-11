@@ -87,6 +87,8 @@ type WHistory = {
 
 type Paginated<T> = {
   count: number;
+  next: boolean | null;
+  previous: boolean | null;
   results: T[];
 };
 
@@ -102,11 +104,4 @@ type Loan = {
   user_data: User & {
     company: Organization;
   };
-};
-
-type PaginatedResponse<T> = {
-  count: number;
-  next: boolean | null;
-  previous: boolean | null;
-  results: T;
 };
