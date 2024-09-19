@@ -50,6 +50,7 @@ const Notification = () => {
                 <button
                   onClick={async (e) => {
                     e.stopPropagation();
+                    if (item.is_read) return;
                     await changeNotificationStatus({
                       id: item.id,
                       is_read: true,

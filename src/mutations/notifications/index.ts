@@ -1,13 +1,17 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { axios } from "@/utils/api";
+import { isAxiosError } from "axios";
+import { toast } from "react-toastify";
 
-async function changeNotificationStatus(data: {
+async function changeNotificationStatus({
+  id,
+}: {
   id: string;
   is_read: boolean;
 }) {
-  const { data: response } = await axios.post(`notification/status`, data);
+  const { data: response } = await axios.post(`notifications/${id}/read/`);
 
-  return response.data;
+  return response;
 }
 
 export function useChangeNotificationStatus(searchParams: {
@@ -45,14 +49,18 @@ export function useChangeNotificationStatus(searchParams: {
 
       return { previousNotifications };
     },
-    // onError: (error, updatedNotification, context) => {
-    //   const queryKey = ["notifications", `?${params.toString()}`];
-    //   queryClient.setQueryData(queryKey, context?.previousNotifications);
-    // },
-    // onSettled: () => {
-    //   queryClient.invalidateQueries([
-    //     ["notifications", `?${params.toString()}`],
-    //   ]);
-    // },
+    onError: (error, _, context) => {
+      const queryKey = ["notifications", `?${params.toString()}`];
+      queryClient.setQueryData(queryKey, context?.previousNotifications);
+
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data || error.response?.data?.error);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries([
+        ["notifications", `?${params.toString()}`],
+      ]);
+    },
   });
 }
