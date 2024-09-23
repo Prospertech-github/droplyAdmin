@@ -1,5 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-export function useOrganization(id: string) {
-  return useQuery<Organization>(["organizations", id]);
+export function useOrganization(
+  id: string,
+  option?: UseQueryOptions<Organization>
+) {
+  return useQuery<Organization>(["organizations", id], option);
 }
