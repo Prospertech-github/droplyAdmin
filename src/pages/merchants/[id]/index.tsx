@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "../styles.module.css";
 import Modal from "@/components/ui/Modal";
 import useDecideOrganization from "@/mutations/organizations";
 import MerchantDetailsContent from "./details-content";
+import { useOrganization } from "@/data/organizations";
 
 export default function MerchantDetails() {
   const { id } = useParams() as { id: string };
-  const { merchant: data } = useLoaderData() as {
-    merchant: Organization;
-    title: string;
-  };
+  const { data } = useOrganization(id, {
+    enabled: !!id,
+  });
   const [decision, setDecision] = useState<"approve" | "decline">();
   const { mutateAsync: decide, isLoading } = useDecideOrganization(id);
 
