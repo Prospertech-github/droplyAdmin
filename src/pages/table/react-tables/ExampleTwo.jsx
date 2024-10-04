@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { advancedTable } from "../../../constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
@@ -12,7 +13,6 @@ import {
 } from "react-table";
 import GlobalFilter from "./GlobalFilter";
 import { useOrders } from "@/data/orders";
-import { Link } from "react-router-dom";
 
 const COLUMNS = [
   {
@@ -140,6 +140,7 @@ const IndeterminateCheckbox = React.forwardRef(
 const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
   const columns = useMemo(() => COLUMNS, []);
   const { data = [], isLoading } = useOrders({ rider });
+  const navigate = useNavigate();
 
   const tableInstance = useTable(
     {
