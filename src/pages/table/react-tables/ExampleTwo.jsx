@@ -67,6 +67,21 @@ const COLUMNS = [
     },
   },
   {
+    Header: "commission amount",
+    accessor: "payment_",
+    Cell: (row) => {
+      return (
+        <span>
+          {row?.cell?.value?.commission_amount?.toLocaleString(undefined, {
+            style: "currency",
+            currency: "NGN",
+            currencyDisplay: "narrowSymbol",
+          }) || "---"}
+        </span>
+      );
+    },
+  },
+  {
     Header: "status",
     accessor: "status",
     Cell: (row) => {
