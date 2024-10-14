@@ -26,7 +26,10 @@ const LoginForm = () => {
   const onSubmit = async (data: typeof initialValues) => {
     await login(data);
 
-    navigate(state?.from || "/dashboard", { replace: true });
+    navigate(
+      state?.from && state.from !== "/login" ? state.from : "/dashboard",
+      { replace: true }
+    );
   };
 
   return (
@@ -45,7 +48,6 @@ const LoginForm = () => {
             error={error?.response?.data?.email}
           />
           <FormInput
-            defaultValue=""
             name="password"
             label="password"
             type="password"
