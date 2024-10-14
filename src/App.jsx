@@ -31,6 +31,7 @@ const Merchants = lazy(() => import("./pages/merchants"));
 const MerchantDetails = lazy(() => import("./pages/merchants/[id]"));
 const Users = lazy(() => import("./pages/customers"));
 const Loans = lazy(() => import("./pages/loans"));
+const Notifications = lazy(() => import("./pages/notifications"));
 const LoanDetails = lazy(() => import("./pages/loans/[id]"));
 
 async function loader() {
@@ -102,6 +103,7 @@ const router = createBrowserRouter(
         <Route path="loans" element={<Loans />} />
         <Route path="loans/:id" element={<LoanDetails />} />
         <Route path="customers" element={<Users />} />
+        <Route path="notifications" element={<Notifications />} />
         <Route element={<SettingsLayout />}>
           <Route path="profile" element={<Profile />} />
           <Route path="security" element={<Security />} />

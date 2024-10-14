@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import moment from "moment";
 import Dropdown from "@/components/ui/Dropdown";
@@ -41,6 +42,9 @@ const Notification = () => {
         <div className="text-sm text-slate-800 dark:text-slate-200 font-medium leading-6">
           Notifications
         </div>
+        <Link to={"/notifications"} className="hover:underline">
+          <small>View all</small>
+        </Link>
       </div>
       {data?.results?.length ? (
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
