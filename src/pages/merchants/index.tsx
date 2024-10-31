@@ -1,7 +1,7 @@
 import CustomTable from "@/components/custom-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { FiEye } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const columns: ColumnDef<Organization>[] = [
   {
@@ -57,6 +57,8 @@ const columns: ColumnDef<Organization>[] = [
   },
 ];
 export default function Merchants() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <CustomTable
@@ -64,6 +66,7 @@ export default function Merchants() {
         columns={columns}
         title="Merchants"
         selectFilters={[]}
+        onClick={(row) => navigate(`/merchants/${(row?.original as any).id}`)}
       />
     </div>
   );

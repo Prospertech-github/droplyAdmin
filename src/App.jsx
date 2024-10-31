@@ -28,6 +28,7 @@ const Profile = lazy(() => import("./pages/profile"));
 const Security = lazy(() => import("./pages/security"));
 const Wallet = lazy(() => import("./pages/wallet"));
 const Merchants = lazy(() => import("./pages/merchants"));
+const Withdrawals = lazy(() => import("./pages/withdrawals"));
 const MerchantDetails = lazy(() => import("./pages/merchants/[id]"));
 const Users = lazy(() => import("./pages/customers"));
 const Loans = lazy(() => import("./pages/loans"));
@@ -100,8 +101,9 @@ const router = createBrowserRouter(
           element={<MerchantDetails />}
           loader={merchantDetailsLoader}
         />
-        <Route path="loans" element={<Loans />} />
-        <Route path="loans/:id" element={<LoanDetails />} />
+        <Route path="withdrawals" element={<Withdrawals />} />
+        {/* <Route path="loans" element={<Loans />} />
+        <Route path="loans/:id" element={<LoanDetails />} /> */}
         <Route path="customers" element={<Users />} />
         <Route path="notifications" element={<Notifications />} />
         <Route element={<SettingsLayout />}>
