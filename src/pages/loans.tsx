@@ -1,5 +1,9 @@
 import CustomTable from "@/components/custom-table";
-import FormInput, { FormSelect, FormTextArea, FormattedNumberInput } from "@/components/form-input";
+import FormInput, {
+  FormSelect,
+  FormTextArea,
+  FormattedNumberInput,
+} from "@/components/form-input";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Modal from "@/components/ui/Modal";
@@ -51,7 +55,9 @@ export default function LoansPage() {
                 <>
                   {original.amount
                     ? `₦ ${original.amount.toLocaleString()}`
-                    : `${original.num_of_bike?.toLocaleString()} ${original.type_of_bike}`}
+                    : `${original.num_of_bike?.toLocaleString()} ${
+                        original.type_of_bike
+                      }`}
                 </>
               );
             },
@@ -69,7 +75,13 @@ export default function LoansPage() {
             header: "Loan Status",
             cell({ row: { original } }) {
               return (
-                <span className={`px-2 py-1 rounded-full ${ststusClass[original.status]}`}>{original.status}</span>
+                <span
+                  className={`px-2 py-1 rounded-full ${
+                    ststusClass[original.status]
+                  }`}
+                >
+                  {original.status}
+                </span>
               );
             },
           },

@@ -232,7 +232,7 @@ const ExampleTwo = ({ title = "Advanced Table Two", rider = "" }) => {
                             column.getSortByToggleProps()
                           )}
                           scope="col"
-                          className=" table-th "
+                          className="table-th whitespace-nowrap"
                         >
                           {column.render("Header")}
                           <span>

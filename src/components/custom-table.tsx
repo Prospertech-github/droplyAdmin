@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   ColumnDef,
   flexRender,
+  Row,
 } from "@tanstack/react-table";
 import { axios } from "@/utils/api";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -23,12 +24,14 @@ type CustomTableProps<Data> = {
     options: { value: string; label: string }[];
   }[];
   title: string;
+  onClick?: (row: Row<Data>) => void;
 };
 export default function CustomTable<Data>({
   baseUrl,
   title,
   columns,
   selectFilters,
+  onClick,
 }: CustomTableProps<Data>) {
   const navigate = useNavigate();
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
@@ -106,14 +109,14 @@ export default function CustomTable<Data>({
           <div className="overflow-hidden ">
             <table className="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700">
               <thead className="bg-slate-200 dark:bg-slate-700">
-                {headerGroups.map((headerGroup) => (
-                  <tr>
+                {headerGroups.map((headerGroup, idx) => (
+                  <tr key={idx}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
                         scope="col"
-                        className=" table-th "
+                        className="table-th whitespace-nowrap"
                       >
                         {header.isPlaceholder ? null : (
                           <div>
@@ -149,9 +152,7 @@ export default function CustomTable<Data>({
                       <tr
                         key={row.id}
                         className="cursor-pointer"
-                        onClick={() =>
-                          navigate(`/merchants/${(row?.original as any).id}`)
-                        }
+                        onClick={() => onClick?.(row)}
                       >
                         {row.getVisibleCells().map((cell) => {
                           return (

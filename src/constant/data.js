@@ -29,16 +29,21 @@ export const menuItems = [
     link: "orders",
     icon: "tabler:package",
   },
+  {
+    title: "Withdrawals",
+    link: "withdrawals",
+    icon: "tabler:git-pull-request",
+  },
   // {
   //   title: "Commissions",
   //   link: "commissions",
   //   icon: "tdesign:money",
   // },
-  {
-    title: "Loans",
-    link: "loans",
-    icon: "icon-park-outline:funds",
-  },
+  // {
+  //   title: "Loans",
+  //   link: "loans",
+  //   icon: "icon-park-outline:funds",
+  // },
   {
     title: "Settings",
     icon: "tabler:settings",
